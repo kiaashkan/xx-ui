@@ -262,8 +262,8 @@ func (s *ServerService) RestartXrayService() error {
 	return nil
 }
 
-func (s *ServerService) downloadXRay(version string) (string, error) {
-	return "", errors.New("download disabled")
+func (s *ServerService) downloadXRay(version string) error {
+	return errors.New("نسخه‌های جدید غیرفعال شده‌اند")
 }
 
 func (s *ServerService) UpdateXray(version string) error {
