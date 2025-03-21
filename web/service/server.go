@@ -1,13 +1,11 @@
 package service
 
 import (
-	"archive/zip"
 	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
-	"io/fs"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -271,59 +269,7 @@ func (s *ServerService) downloadXRay(version string) (string, error) {
 }
 
 func (s *ServerService) UpdateXray(version string) error {
-	zipFileName, err := s.downloadXRay(version)
-	if err != nil {
-		return err
-	}
-
-	zipFile, err := os.Open(zipFileName)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		zipFile.Close()
-		os.Remove(zipFileName)
-	}()
-
-	stat, err := zipFile.Stat()
-	if err != nil {
-		return err
-	}
-	reader, err := zip.NewReader(zipFile, stat.Size())
-	if err != nil {
-		return err
-	}
-
-	s.xrayService.StopXray()
-	defer func() {
-		err := s.xrayService.RestartXray(true)
-		if err != nil {
-			logger.Error("start xray failed:", err)
-		}
-	}()
-
-	copyZipFile := func(zipName string, fileName string) error {
-		zipFile, err := reader.Open(zipName)
-		if err != nil {
-			return err
-		}
-		os.Remove(fileName)
-		file, err := os.OpenFile(fileName, os.O_CREATE|os.O_RDWR|os.O_TRUNC, fs.ModePerm)
-		if err != nil {
-			return err
-		}
-		defer file.Close()
-		_, err = io.Copy(file, zipFile)
-		return err
-	}
-
-	err = copyZipFile("xray", xray.GetBinaryPath())
-	if err != nil {
-		return err
-	}
-
-	return nil
-
+	return errors.New("update disabled")
 }
 
 func (s *ServerService) GetLogs(count string, level string, syslog string) []string {
