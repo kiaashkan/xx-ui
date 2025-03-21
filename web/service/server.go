@@ -238,10 +238,6 @@ func (s *ServerService) GetStatus(lastStatus *Status) *Status {
 	return status
 }
 
-func (s *ServerService) GetXrayVersions() ([]string, error) {
-	return []string{"v1.8.6"}, nil
-}
-
 func (s *ServerService) StopXrayService() error {
 	err := s.xrayService.StopXray()
 	if err != nil {
@@ -260,10 +256,6 @@ func (s *ServerService) RestartXrayService() error {
 		}
 	}()
 	return nil
-}
-
-func (s *ServerService) downloadXRay(version string) error {
-	return errors.New("نسخه‌های جدید غیرفعال شده‌اند")
 }
 
 func (s *ServerService) UpdateXray(version string) error {
