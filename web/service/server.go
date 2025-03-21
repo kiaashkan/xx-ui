@@ -267,7 +267,7 @@ func (s *ServerService) downloadXRay(version string) (string, error) {
 }
 
 func (s *ServerService) UpdateXray(version string) error {
-	return errors.New("update disabled")
+	return errors.New("نسخه‌های جدید غیرفعال شده‌اند")
 }
 
 func (s *ServerService) GetLogs(count string, level string, syslog string) []string {
