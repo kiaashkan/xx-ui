@@ -242,17 +242,16 @@ func (s *ServerService) GetXrayVersions() ([]string, error) {
 	return []string{"v1.8.6"}, nil
 }
 
-func (s *ServerService) StopXrayService() (string error) {
+func (s *ServerService) StopXrayService() error {
 	err := s.xrayService.StopXray()
 	if err != nil {
 		logger.Error("stop xray failed:", err)
 		return err
 	}
-
 	return nil
 }
 
-func (s *ServerService) RestartXrayService() (string error) {
+func (s *ServerService) RestartXrayService() error {
 	s.xrayService.StopXray()
 	defer func() {
 		err := s.xrayService.RestartXray(true)
@@ -260,7 +259,6 @@ func (s *ServerService) RestartXrayService() (string error) {
 			logger.Error("start xray failed:", err)
 		}
 	}()
-
 	return nil
 }
 
